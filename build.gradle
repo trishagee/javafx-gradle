@@ -1,6 +1,5 @@
 plugins {
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.9'
 }
 
 group 'com.mechanitis'
@@ -10,18 +9,38 @@ repositories {
     mavenCentral()
 }
 
+def currentOS = org.gradle.nativeplatform.platform.internal.DefaultNativePlatform.currentOperatingSystem;
+def platform
+if (currentOS.isWindows()) {
+    platform = 'win'
+} else if (currentOS.isLinux()) {
+    platform = 'linux'
+} else if (currentOS.isMacOsX()) {
+    platform = 'mac'
+}
+def javaFXVersion = "15.0.1"
+
+
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    implementation "org.openjfx:javafx-base:${javaFXVersion}:${platform}"
+    implementation "org.openjfx:javafx-controls:${javaFXVersion}:${platform}"
+    implementation "org.openjfx:javafx-graphics:${javaFXVersion}:${platform}"
+//    implementation "org.openjfx:javafx-fxml:${javaFXVersion}:${platform}"
 }
 
 test {
     useJUnitPlatform()
 }
 
-javafx {
-    version = "15.0.1"
-    modules = [ 'javafx.controls' ]
+//mainClassName = 'com.mechanitis.demo.javafxgradle/com.mechanitis.demo.javafxgradle.HelloFX'
+
+application {
+    mainModule.set('com.mechanitis.demo.javafxgradle')
+    mainClass.set('com.mechanitis.demo.javafxgradle.HelloFX')
 }
 
-mainClassName = 'HelloFX'
+java {
+    modularity.inferModulePath.set(true)
+}
