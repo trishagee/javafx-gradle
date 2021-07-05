@@ -10,10 +10,10 @@ repositories {
 }
 
 def javaFXPlatform = getJavaFXPlatform()
-def javaFXVersion = "15.0.1"
+def javaFXVersion = '16'
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     implementation "org.openjfx:javafx-base:${javaFXVersion}:${javaFXPlatform}"
     implementation "org.openjfx:javafx-controls:${javaFXVersion}:${javaFXPlatform}"
