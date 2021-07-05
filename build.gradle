@@ -1,5 +1,6 @@
 plugins {
     id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.10'
 }
 
 group 'com.mechanitis'
@@ -9,15 +10,14 @@ repositories {
     mavenCentral()
 }
 
-def javaFXPlatform = getJavaFXPlatform()
-def javaFXVersion = '16'
+javafx {
+    version = "16"
+    modules = ['javafx.controls', 'javafx.graphics']
+}
 
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
-    implementation "org.openjfx:javafx-base:${javaFXVersion}:${javaFXPlatform}"
-    implementation "org.openjfx:javafx-controls:${javaFXVersion}:${javaFXPlatform}"
-    implementation "org.openjfx:javafx-graphics:${javaFXVersion}:${javaFXPlatform}"
 }
 
 test {
@@ -33,14 +33,3 @@ java {
     modularity.inferModulePath.set(true)
 }
 
-private static String getJavaFXPlatform() {
-    def currentOS = org.gradle.nativeplatform.platform.internal.DefaultNativePlatform.currentOperatingSystem;
-    if (currentOS.isWindows()) {
-        return 'win'
-    } else if (currentOS.isLinux()) {
-        return 'linux'
-    } else if (currentOS.isMacOsX()) {
-        return 'mac'
-    }
-    return null
-}
